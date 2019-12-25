@@ -1,0 +1,5 @@
+Trello_quora.iml
+.idea/
+quora-api/target/
+quora-service/target/
+quora-db/target/
