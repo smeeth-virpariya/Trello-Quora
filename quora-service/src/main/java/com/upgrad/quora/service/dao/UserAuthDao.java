@@ -15,6 +15,7 @@ public class UserAuthDao {
 
     /**
      * Gets the user auth information based on the access token.
+     *
      * @param accessToken access token of the user auth whose details is to be fetched.
      * @return A single user auth object or null
      */
@@ -24,5 +25,10 @@ public class UserAuthDao {
         } catch (NoResultException nre) {
             return null;
         }
+    }
+
+    public UserAuthEntity createAuthToken(final UserAuthEntity userAuthEntity) {
+        entityManager.persist(userAuthEntity);
+        return userAuthEntity;
     }
 }
