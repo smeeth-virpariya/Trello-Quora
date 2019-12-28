@@ -40,7 +40,7 @@ public class QuestionControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("code").value("ATHR-002"));
     }
 
-    /*
+
     //This test case passes when you try to get the detail of all the questions and the JWT token entered exists in the database and the user corresponding to that JWT token is signed in.
     @Test
     public void getAllQuestions() throws Exception {
@@ -64,6 +64,7 @@ public class QuestionControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("code").value("ATHR-002"));
     }
 
+    /*
     //This test case passes when you try to edit the question but the JWT token entered does not exist in the database.
     @Test
     public void editQuestionWithNonExistingAccessToken() throws Exception {
