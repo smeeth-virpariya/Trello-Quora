@@ -21,19 +21,18 @@ public class UserDao {
      */
     public UserEntity getUserById(final String userId) {
         try {
-            return entityManager.createNamedQuery( "userByUserId", UserEntity.class ).setParameter( "userId", userId ).getSingleResult();
+            return entityManager.createNamedQuery("userByUserId", UserEntity.class).setParameter("userId", userId).getSingleResult();
         } catch (NoResultException nre) {
             return null;
         }
     }
 
     /**
-     * <<<<<<< HEAD
      * This methods stores the user details in the DB.
      * This method receives the object of UserEntity type with its attributes being set.
      */
     public UserEntity createUser(UserEntity userEntity) {
-        entityManager.persist( userEntity );
+        entityManager.persist(userEntity);
         return userEntity;
     }
 
@@ -45,7 +44,7 @@ public class UserDao {
      */
     public UserEntity getUserByUserName(final String userName) {
         try {
-            return entityManager.createNamedQuery( "userByUserName", UserEntity.class ).setParameter( "userName", userName ).getSingleResult();
+            return entityManager.createNamedQuery("userByUserName", UserEntity.class).setParameter("userName", userName).getSingleResult();
         } catch (NoResultException nre) {
             return null;
         }
@@ -59,15 +58,14 @@ public class UserDao {
      */
     public UserEntity getUserByEmail(final String email) {
         try {
-            return entityManager.createNamedQuery( "userByEmail", UserEntity.class ).setParameter( "email", email ).getSingleResult();
+            return entityManager.createNamedQuery("userByEmail", UserEntity.class).setParameter("email", email).getSingleResult();
         } catch (NoResultException nre) {
             return null;
         }
     }
 
     public void updateUserEntity(final UserEntity updatedUserEntity) {
-        entityManager.merge( updatedUserEntity );
-
+        entityManager.merge(updatedUserEntity);
     }
 
     /**
@@ -85,5 +83,4 @@ public class UserDao {
         }
         return deleteUser;
     }
-
 }
