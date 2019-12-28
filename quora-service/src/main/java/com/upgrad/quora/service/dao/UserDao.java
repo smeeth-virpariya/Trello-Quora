@@ -1,6 +1,7 @@
 package com.upgrad.quora.service.dao;
 
 import com.upgrad.quora.service.entity.UserEntity;
+import org.hibernate.sql.Delete;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -28,6 +29,7 @@ public class UserDao {
     }
 
     /**
+<<<<<<< HEAD
      * This methods stores the user details in the DB.
      * This method receives the object of UserEntity type with its attributes being set.
      */
@@ -66,5 +68,6 @@ public class UserDao {
 
     public void updateUserEntity(final UserEntity updatedUserEntity) {
         entityManager.merge(updatedUserEntity);
+
     }
 }
