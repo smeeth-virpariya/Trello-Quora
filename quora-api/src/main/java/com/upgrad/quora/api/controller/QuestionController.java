@@ -36,7 +36,7 @@ public class QuestionController {
     public ResponseEntity<QuestionResponse> createQuestion(@RequestHeader("authorization") final String accessToken, QuestionRequest questionRequest) throws AuthorizationFailedException {
         QuestionEntity questionEntity = new QuestionEntity();
         questionEntity.setContent(questionRequest.getContent());
-        questionService.createQuestion(questionEntity, accessToken);
+        questionEntity = questionService.createQuestion(questionEntity, accessToken);
         QuestionResponse questionResponse = new QuestionResponse();
         questionResponse.setId(questionEntity.getUuid());
         questionResponse.setStatus("QUESTION CREATED");

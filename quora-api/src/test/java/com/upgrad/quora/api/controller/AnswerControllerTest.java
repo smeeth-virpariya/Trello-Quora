@@ -1,4 +1,4 @@
-/*package com.upgrad.quora.api.controller;
+package com.upgrad.quora.api.controller;
 
 
 import org.junit.Test;
@@ -48,6 +48,7 @@ public class AnswerControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("code").value("QUES-001"));
     }
 
+    /*
     //This test case passes when you try to edit the answer but the JWT token entered does not exist in the database.
     @Test
     public void editAnswerWithNonExistingAccessToken() throws Exception {
@@ -135,7 +136,6 @@ public class AnswerControllerTest {
                 .andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("code").value("QUES-001"));
     }
-
+*/
 
 }
-*/
