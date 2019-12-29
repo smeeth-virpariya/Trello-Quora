@@ -76,7 +76,6 @@ public class UserDao {
      */
 
     public UserEntity deleteUser(final String userId) {
-
         UserEntity deleteUser = getUserById( userId );
         if (deleteUser != null) {
             this.entityManager.remove( deleteUser );
