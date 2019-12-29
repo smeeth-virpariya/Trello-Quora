@@ -30,7 +30,7 @@ public class QuestionService {
      * @throws AuthorizationFailedException ATHR-001 - if user token is not present in DB. ATHR-002 if the user has already signed out.
      */
     @Transactional
-    public void createQuestion(QuestionEntity questionEntity, final String accessToken) throws AuthorizationFailedException {
+    public QuestionEntity createQuestion(QuestionEntity questionEntity, final String accessToken) throws AuthorizationFailedException {
         UserAuthEntity userAuthEntity = userAuthDao.getUserAuthByToken(accessToken);
         if (userAuthEntity == null) {
             throw new AuthorizationFailedException("ATHR-001", "User has not signed in");
@@ -40,7 +40,7 @@ public class QuestionService {
         questionEntity.setDate(ZonedDateTime.now());
         questionEntity.setUuid(UUID.randomUUID().toString());
         questionEntity.setUserEntity(userAuthEntity.getUserEntity());
-        questionDao.createQuestion(questionEntity);
+        return questionDao.createQuestion(questionEntity);
     }
 
     /**
