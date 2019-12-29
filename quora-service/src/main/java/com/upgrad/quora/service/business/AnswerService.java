@@ -11,6 +11,7 @@ import com.upgrad.quora.service.exception.AuthorizationFailedException;
 import com.upgrad.quora.service.exception.InvalidQuestionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
@@ -65,5 +66,34 @@ public class AnswerService {
         answerEntity.setAnswer(newAnswer);
         answerDao.updateAnswer(answerEntity);
         return answerEntity;
+    }
+
+    /**
+     * delete the answer
+     *
+     * @param answerId    id of the answer to be deleted.
+     * @param accessToken accessToken of the user for valid authentication.
+     * @throws AuthorizationFailedException ATHR-001 - if User has not signed in. ATHR-002 if the User is signed out. ATHR-003 if non admin or non owner of the answer tries to delete the answer.
+     * @throws AnswerNotFoundException      if the answer with id doesn't exist.
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public AnswerEntity deleteAnswer(final String answerId, final String accessToken) throws AuthorizationFailedException, AnswerNotFoundException {
+
+        UserAuthEntity userAuthEntity = userAuthDao.getUserAuthByToken(accessToken);
+        if (userAuthEntity == null) {
+            throw new AuthorizationFailedException("ATHR-001", "User has not signed in");
+        } else if (userAuthEntity.getLogoutAt() != null) {
+            throw new AuthorizationFailedException("ATHR-002", "User is signed out.Sign in first to delete an answer");
+        }
+
+        AnswerEntity answerEntity = answerDao.getAnswerById(answerId);
+        if (answerEntity == null) {
+            throw new AnswerNotFoundException("ANS-001", "Entered answer uuid does not exist");
+        }
+        if (userAuthEntity.getUserEntity().getRole().equals("admin") || answerEntity.getUserEntity().getUuid().equals(userAuthEntity.getUserEntity().getUuid())) {
+            return answerDao.deleteAnswer(answerId);
+        } else {
+            throw new AuthorizationFailedException("ATHR-003", "Only the answer owner or admin can delete the answer");
+        }
     }
 }
