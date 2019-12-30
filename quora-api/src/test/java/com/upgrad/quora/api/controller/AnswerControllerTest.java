@@ -114,7 +114,7 @@ public class AnswerControllerTest {
     }
 
     //This test case passes when you try to get all the answers posted for a specific question but the JWT token entered does not exist in the database.
-    /*@Test
+    @Test
     public void getAllAnswersToQuestionWithNonExistingAccessToken() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/answer/all/database_question_uuid").header("authorization", "non_existing_access_token"))
                 .andExpect(status().isForbidden())
@@ -136,6 +136,6 @@ public class AnswerControllerTest {
                 .andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("code").value("QUES-001"));
     }
-*/
+
 
 }
