@@ -80,7 +80,7 @@ public class AnswerControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("code").value("ATHR-003"));
     }
 
-    /*
+
     //This test case passes when you try to delete the answer but the JWT token entered does not exist in the database.
     @Test
     public void deleteAnswerWithNonExistingAccessToken() throws Exception {
@@ -114,7 +114,7 @@ public class AnswerControllerTest {
     }
 
     //This test case passes when you try to get all the answers posted for a specific question but the JWT token entered does not exist in the database.
-    @Test
+    /*@Test
     public void getAllAnswersToQuestionWithNonExistingAccessToken() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/answer/all/database_question_uuid").header("authorization", "non_existing_access_token"))
                 .andExpect(status().isForbidden())
