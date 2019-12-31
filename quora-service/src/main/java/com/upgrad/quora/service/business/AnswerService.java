@@ -113,12 +113,10 @@ public class AnswerService {
         } else if (userAuthEntity.getLogoutAt() != null) {
             throw new AuthorizationFailedException("ATHR-002", "User is signed out.Sign in first to get the answers");
         }
-
         QuestionEntity questionEntity = questionDao.getQuestionById(questionId);
         if (questionEntity == null) {
             throw new InvalidQuestionException("QUES-001", "The question with entered uuid whose details are to be seen does not exist");
         }
-
-        return answerDao.getAllAnswersToQuestion();
+        return answerDao.getAllAnswersToQuestion(questionId);
     }
 }
