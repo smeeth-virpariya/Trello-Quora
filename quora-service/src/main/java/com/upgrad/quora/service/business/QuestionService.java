@@ -96,6 +96,36 @@ public class QuestionService {
     }
 
     /**
+     * * Delete the question
+     *
+     * @param accessToken accessToken of the user for valid authentication.
+     * @param questionId  id of the question to be edited.
+     * @return QuestionEntity
+     * @throws AuthorizationFailedException ATHR-001 - if user token is not present in DB. ATHR-002 if the user has already signed out.
+     * @throws InvalidQuestionException     if the question with id doesn't exist.
+     */
+    @Transactional
+    public QuestionEntity deleteQuestion(final String accessToken, final String questionId) throws AuthorizationFailedException, InvalidQuestionException {
+        UserAuthEntity userAuthEntity = userAuthDao.getUserAuthByToken(accessToken);
+        if (userAuthEntity == null) {
+            throw new AuthorizationFailedException("ATHR-001", "User has not signed in");
+        } else if (userAuthEntity.getLogoutAt() != null) {
+            throw new AuthorizationFailedException("ATHR-002", "User is signed out.Sign in first to delete the question");
+        }
+        QuestionEntity questionEntity = questionDao.getQuestionById(questionId);
+        if (questionEntity == null) {
+            throw new InvalidQuestionException("QUES-001", "Entered question uuid does not exist");
+        }
+        if (!questionEntity.getUserEntity().getUuid().equals(userAuthEntity.getUserEntity().getUuid()) &&
+                !userAuthEntity.getUserEntity().getRole().equals( "admin" )) {
+            throw new AuthorizationFailedException("ATHR-003", "Only the question owner or admin can delete the question");
+        }
+
+        questionDao.deleteQuestion(questionEntity);
+        return questionEntity;
+    }
+
+    /**
      * Gets all the questions posted by a specific user.
      *
      * @param  userId userId of the user whose posted questions have to be retrieved
@@ -114,4 +144,6 @@ public class QuestionService {
 
         return questionDao.getAllQuestionsByUser(user);
     }
+
+
 }

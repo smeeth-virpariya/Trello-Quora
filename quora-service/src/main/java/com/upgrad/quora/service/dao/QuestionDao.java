@@ -59,6 +59,15 @@ public class QuestionDao {
     }
 
     /**
+     * Delete the question
+     *
+     * @param questionEntity question entity to be deleted.
+     */
+    public void deleteQuestion(QuestionEntity questionEntity) {
+        entityManager.remove( questionEntity );
+    }
+
+    /**
      * Fetch all the questions from the DB.
      *
      * @param userId userId of the user whose list of asked questions has to be retrieved
@@ -68,4 +77,6 @@ public class QuestionDao {
         return entityManager.createNamedQuery( "getQuestionByUser", QuestionEntity.class ).setParameter( "user", userId )
                 .getResultList();
     }
+
+
 }
