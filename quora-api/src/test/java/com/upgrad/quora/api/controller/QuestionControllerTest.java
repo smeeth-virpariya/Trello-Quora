@@ -128,40 +128,50 @@ public class QuestionControllerTest {
         .andExpect(MockMvcResultMatchers.jsonPath("code").value("QUES-001"));
   }
 
-  /*
-      //This test case passes when you try to delete the question but the JWT token entered does not exist in the database.
-      @Test
-      public void deleteQuestionWithNonExistingAccessToken() throws Exception {
-          mvc.perform(MockMvcRequestBuilders.delete("/question/delete/database_question_uuid").header("authorization", "non_existing_access_token"))
-                  .andExpect(status().isForbidden())
-                  .andExpect(MockMvcResultMatchers.jsonPath("code").value("ATHR-001"));
-      }
+  // This test case passes when you try to delete the question but the JWT token entered does not
+  // exist in the database.
+  @Test
+  public void deleteQuestionWithNonExistingAccessToken() throws Exception {
+    mvc.perform(
+            MockMvcRequestBuilders.delete("/question/delete/database_question_uuid")
+                .header("authorization", "non_existing_access_token"))
+        .andExpect(status().isForbidden())
+        .andExpect(MockMvcResultMatchers.jsonPath("code").value("ATHR-001"));
+  }
 
-      //This test case passes when you try to delete the question and the JWT token entered exists in the database but the user corresponding to that JWT token is signed out.
-      @Test
-      public void deleteQuestionWithSignedOutUser() throws Exception {
-          mvc.perform(MockMvcRequestBuilders.delete("/question/delete/database_question_uuid").header("authorization", "database_accesstoken3"))
-                  .andExpect(status().isForbidden())
-                  .andExpect(MockMvcResultMatchers.jsonPath("code").value("ATHR-002"));
-      }
+  // This test case passes when you try to delete the question and the JWT token entered exists in
+  // the database but the user corresponding to that JWT token is signed out.
+  @Test
+  public void deleteQuestionWithSignedOutUser() throws Exception {
+    mvc.perform(
+            MockMvcRequestBuilders.delete("/question/delete/database_question_uuid")
+                .header("authorization", "database_accesstoken3"))
+        .andExpect(status().isForbidden())
+        .andExpect(MockMvcResultMatchers.jsonPath("code").value("ATHR-002"));
+  }
 
-      //This test case passes when you try to delete the question and the JWT token entered exists in the database and the user corresponding to that JWT token is signed in but the corresponding user is not the owner of the question or he is not the admin.
-      @Test
-      public void deleteQuestionWithoutOwnership() throws Exception {
-          mvc.perform(MockMvcRequestBuilders.delete("/question/delete/database_question_uuid").header("authorization", "database_accesstoken2"))
-                  .andExpect(status().isForbidden())
-                  .andExpect(MockMvcResultMatchers.jsonPath("code").value("ATHR-003"));
-      }
+  // This test case passes when you try to delete the question and the JWT token entered exists in
+  // the database and the user corresponding to that JWT token is signed in but the corresponding
+  // user is not the owner of the question or he is not the admin.
+  @Test
+  public void deleteQuestionWithoutOwnership() throws Exception {
+    mvc.perform(
+            MockMvcRequestBuilders.delete("/question/delete/database_question_uuid")
+                .header("authorization", "database_accesstoken2"))
+        .andExpect(status().isForbidden())
+        .andExpect(MockMvcResultMatchers.jsonPath("code").value("ATHR-003"));
+  }
 
+  // This test case passes when you try to delete the question which does not exist in the database.
+  @Test
+  public void deleteNoneExistingQuestion() throws Exception {
+    mvc.perform(
+            MockMvcRequestBuilders.delete("/question/delete/non_existing_question_uuid")
+                .header("authorization", "database_accesstoken1"))
+        .andExpect(status().isNotFound())
+        .andExpect(MockMvcResultMatchers.jsonPath("code").value("QUES-001"));
+  }
 
-      //This test case passes when you try to delete the question which does not exist in the database.
-      @Test
-      public void deleteNoneExistingQuestion() throws Exception {
-          mvc.perform(MockMvcRequestBuilders.delete("/question/delete/non_existing_question_uuid").header("authorization", "database_accesstoken1"))
-                  .andExpect(status().isNotFound())
-                  .andExpect(MockMvcResultMatchers.jsonPath("code").value("QUES-001"));
-      }
-  */
   // This test case passes when you try to get all the questions posted by a specific user but the
   // JWT token entered does not exist in the database.
   @Test
