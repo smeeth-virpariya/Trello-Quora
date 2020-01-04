@@ -1,6 +1,7 @@
 package com.upgrad.quora.service.dao;
 
 import com.upgrad.quora.service.entity.QuestionEntity;
+import com.upgrad.quora.service.entity.UserEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -21,7 +22,7 @@ public class QuestionDao {
      * @return Persisted question.
      */
     public QuestionEntity createQuestion(QuestionEntity questionEntity) {
-        entityManager.persist(questionEntity);
+        entityManager.persist( questionEntity );
         return questionEntity;
     }
 
@@ -31,7 +32,7 @@ public class QuestionDao {
      * @return List of QuestionEntity
      */
     public List<QuestionEntity> getAllQuestions() {
-        return entityManager.createNamedQuery("getAllQuestions", QuestionEntity.class).getResultList();
+        return entityManager.createNamedQuery( "getAllQuestions", QuestionEntity.class ).getResultList();
     }
 
     /**
@@ -42,7 +43,7 @@ public class QuestionDao {
      */
     public QuestionEntity getQuestionById(final String questionId) {
         try {
-            return entityManager.createNamedQuery("getQuestionById", QuestionEntity.class).setParameter("uuid", questionId).getSingleResult();
+            return entityManager.createNamedQuery( "getQuestionById", QuestionEntity.class ).setParameter( "uuid", questionId ).getSingleResult();
         } catch (NoResultException nre) {
             return null;
         }
@@ -54,6 +55,28 @@ public class QuestionDao {
      * @param questionEntity question entity to be updated.
      */
     public void updateQuestion(QuestionEntity questionEntity) {
-        entityManager.merge(questionEntity);
+        entityManager.merge( questionEntity );
     }
+
+    /**
+     * Delete the question
+     *
+     * @param questionEntity question entity to be deleted.
+     */
+    public void deleteQuestion(QuestionEntity questionEntity) {
+        entityManager.remove( questionEntity );
+    }
+
+    /**
+     * Fetch all the questions from the DB.
+     *
+     * @param userId userId of the user whose list of asked questions has to be retrieved
+     * @return List of QuestionEntity
+     */
+    public List<QuestionEntity> getAllQuestionsByUser(final UserEntity userId) {
+        return entityManager.createNamedQuery( "getQuestionByUser", QuestionEntity.class ).setParameter( "user", userId )
+                .getResultList();
+    }
+
+
 }
