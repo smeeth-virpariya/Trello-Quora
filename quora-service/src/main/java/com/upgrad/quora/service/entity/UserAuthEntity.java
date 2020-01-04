@@ -27,6 +27,7 @@ public class UserAuthEntity {
   private Integer id;
 
   @Column(name = "uuid")
+  @NotNull
   @Size(max = 200)
   private String uuid;
 
