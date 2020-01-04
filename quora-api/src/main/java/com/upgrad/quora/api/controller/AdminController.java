@@ -1,4 +1,3 @@
-
 package com.upgrad.quora.api.controller;
 
 import com.upgrad.quora.api.model.UserDeleteResponse;
@@ -16,29 +15,32 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/")
 public class AdminController {
 
-    @Autowired
-    private AdminService adminService;
+  @Autowired private AdminService adminService;
 
+  /**
+   * Get the user details provided the userId.
+   *
+   * @param userId user id of the user whose details has to be fetched.
+   * @param accessToken Access token to authenticate the user who is requesting for user details.
+   * @return
+   * @throws AuthorizationFailedException - if the access token is invalid or already logged out or
+   *     user is not an admin or user with enetered uuid does not exist
+   * @throws UserNotFoundException - if the user with given id is not present in the records.
+   */
+  @RequestMapping(
+      method = RequestMethod.DELETE,
+      path = "/admin/user/{userId}",
+      produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public ResponseEntity<UserDeleteResponse> deleteUser(
+      @RequestHeader("authorization") final String accessToken,
+      @PathVariable("userId") String userId)
+      throws AuthorizationFailedException, UserNotFoundException {
 
-    /**
-     * Get the user details provided the userId.
-     * @param userId user id of the user whose details has to be fetched.
-     * @param accessToken Access token to authenticate the user who is requesting for user details.
-     * @return
-     * @throws AuthorizationFailedException - if the access token is invalid or already logged out or user is not an admin or user with enetered uuid does not exist
-     * @throws UserNotFoundException - if the user with given id is not present in the records.
-     */
-    @RequestMapping(method = RequestMethod.DELETE, path = "/admin/user/{userId}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<UserDeleteResponse> deleteUser(@PathVariable("userId") String userId,
-                                                      @RequestHeader("authorization") final String accessToken) throws AuthorizationFailedException, UserNotFoundException {
+    UserEntity userEntity = adminService.deleteUser(userId, accessToken);
 
+    UserDeleteResponse userDeleteResponse =
+        new UserDeleteResponse().id(userEntity.getUuid()).status("USER SUCCESSFULLY DELETED");
 
-        UserEntity userEntity = adminService.deleteUser( userId, accessToken);
-
-        UserDeleteResponse userDeleteResponse = new UserDeleteResponse().id( userEntity.getUuid() )
-                                                                   .status( "USER SUCCESSFULLY DELETED" );
-
-        return new ResponseEntity<UserDeleteResponse>( userDeleteResponse,HttpStatus.OK );
-
-    }
+    return new ResponseEntity<UserDeleteResponse>(userDeleteResponse, HttpStatus.OK);
+  }
 }

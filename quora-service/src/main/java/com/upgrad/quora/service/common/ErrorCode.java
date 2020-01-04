@@ -2,8 +2,7 @@ package com.upgrad.quora.service.common;
 
 public interface ErrorCode {
 
-    String getCode();
+  String getCode();
 
-    String getDefaultMessage();
-
+  String getDefaultMessage();
 }
