@@ -15,99 +15,101 @@ import java.time.ZonedDateTime;
 @Entity
 @Table(name = "answer")
 @NamedQueries({
-        @NamedQuery(name = "getAnswerById", query = "select a from AnswerEntity a where a.uuid=:uuid"),
-        @NamedQuery(name = "getAllAnswersToQuestion", query = "select a from AnswerEntity a where a.questionEntity.uuid = :uuid")
+  @NamedQuery(name = "getAnswerById", query = "select a from AnswerEntity a where a.uuid=:uuid"),
+  @NamedQuery(
+      name = "getAllAnswersToQuestion",
+      query = "select a from AnswerEntity a where a.questionEntity.uuid = :uuid")
 })
 public class AnswerEntity {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+  @Id
+  @Column(name = "id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
-    @Column(name = "uuid")
-    @Size(max = 200)
-    @NotNull
-    private String uuid;
+  @Column(name = "uuid")
+  @Size(max = 200)
+  @NotNull
+  private String uuid;
 
-    @Column(name = "ans")
-    @Size(max = 255)
-    @NotNull
-    private String answer;
+  @Column(name = "ans")
+  @Size(max = 255)
+  @NotNull
+  private String answer;
 
-    @Column(name = "date")
-    @NotNull
-    private ZonedDateTime date;
+  @Column(name = "date")
+  @NotNull
+  private ZonedDateTime date;
 
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
+  @ManyToOne
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  @JoinColumn(name = "user_id")
+  private UserEntity userEntity;
 
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "question_id")
-    private QuestionEntity questionEntity;
+  @ManyToOne
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  @JoinColumn(name = "question_id")
+  private QuestionEntity questionEntity;
 
-    public Integer getId() {
-        return id;
-    }
+  public Integer getId() {
+    return id;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public String getUuid() {
-        return uuid;
-    }
+  public String getUuid() {
+    return uuid;
+  }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
+  }
 
-    public String getAnswer() {
-        return answer;
-    }
+  public String getAnswer() {
+    return answer;
+  }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
+  public void setAnswer(String answer) {
+    this.answer = answer;
+  }
 
-    public ZonedDateTime getDate() {
-        return date;
-    }
+  public ZonedDateTime getDate() {
+    return date;
+  }
 
-    public void setDate(ZonedDateTime date) {
-        this.date = date;
-    }
+  public void setDate(ZonedDateTime date) {
+    this.date = date;
+  }
 
-    public UserEntity getUserEntity() {
-        return userEntity;
-    }
+  public UserEntity getUserEntity() {
+    return userEntity;
+  }
 
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
-    }
+  public void setUserEntity(UserEntity userEntity) {
+    this.userEntity = userEntity;
+  }
 
-    public QuestionEntity getQuestionEntity() {
-        return questionEntity;
-    }
+  public QuestionEntity getQuestionEntity() {
+    return questionEntity;
+  }
 
-    public void setQuestionEntity(QuestionEntity questionEntity) {
-        this.questionEntity = questionEntity;
-    }
+  public void setQuestionEntity(QuestionEntity questionEntity) {
+    this.questionEntity = questionEntity;
+  }
 
-    @Override
-    public boolean equals(Object obj) {
-        return new EqualsBuilder().append(this, obj).isEquals();
-    }
+  @Override
+  public boolean equals(Object obj) {
+    return new EqualsBuilder().append(this, obj).isEquals();
+  }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(this).hashCode();
-    }
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder().append(this).hashCode();
+  }
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-    }
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+  }
 }
